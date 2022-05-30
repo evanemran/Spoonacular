@@ -4,12 +4,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:spoonacular/DetailScreen.dart';
 import 'package:spoonacular/RequestManager/api_client.dart';
 import 'package:spoonacular/Themes/AppTheme.dart';
 import 'package:spoonacular/models/Recipe.dart';
 
 String api_key = "c08f4981c8a44110b7ee3521f12796b4";
 int number = 20;
+// Recipe clickedRecipe = new Recipe();
 
 void main() {
   runApp(const MyApp());
@@ -44,148 +46,157 @@ ListView _buildRandomRecipeList(BuildContext context, List<Recipe> posts) {
     itemCount: posts.length,
     padding: EdgeInsets.all(8),
     itemBuilder: (context, index) {
+      // clickedRecipe = posts[index];
       return Card(
-        elevation: 4,
+        elevation: 8,
         color: Colors.white,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children:<Widget>[
-              Container(
-                decoration:BoxDecoration(
-                    borderRadius:BorderRadius.circular(10),
-                    color:Colors.transparent
-                ),
-                child: new Image.network(posts[index].image.toString(),
-                fit: BoxFit.fill,),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Container(
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DetailScreen(selectedRecipe: posts[index],)),
+            );
+          },
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children:<Widget>[
+                Container(
                   decoration:BoxDecoration(
                       borderRadius:BorderRadius.circular(10),
                       color:Colors.transparent
                   ),
-                  child: Text(posts[index].title.toString(),
-                    style: AppTheme.titleText,),
+                  child: new Image.network(posts[index].image.toString(),
+                    fit: BoxFit.fill,),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Container(
-                  decoration:BoxDecoration(
-                      borderRadius:BorderRadius.circular(10),
-                      color:Colors.transparent
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration:BoxDecoration(
+                        borderRadius:BorderRadius.circular(10),
+                        color:Colors.transparent
+                    ),
+                    child: Text(posts[index].title.toString(),
+                      style: AppTheme.titleText,),
                   ),
-                  child: Text(posts[index].sourceName.toString(),
-                    style: AppTheme.subtitleText,),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Container(
-                  decoration:BoxDecoration(
-                      borderRadius:BorderRadius.circular(10),
-                      color:Colors.transparent
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration:BoxDecoration(
+                        borderRadius:BorderRadius.circular(10),
+                        color:Colors.transparent
+                    ),
+                    child: Text(posts[index].sourceName.toString(),
+                      style: AppTheme.subtitleText,),
                   ),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children:<Widget>[
-                        Container(
-                          // decoration:BoxDecoration(
-                          //     borderRadius:BorderRadius.circular(0),
-                          //     color:Colors.green
-                          // ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget> [
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Container(
-                                  child: IconButton(
-                                    icon: Icon(Icons.thumb_up),
-                                    color: Colors.blue,
-                                    onPressed: () {},
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Container(
-                                  child: Text(posts[index].aggregateLikes.toString() + " Likes",
-                                    style: AppTheme.subtitleText,),
-                                ),
-                              ),
-                            ],
-                          )
-                          // child: Text(posts[index].aggregateLikes.toString() + " Likes",
-                          //   style: AppTheme.subtitleText,),
-                        ),
-                        Container(
-                          // decoration:BoxDecoration(
-                          //     borderRadius:BorderRadius.circular(0),
-                          //     color:Colors.green
-                          // ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget> [
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Container(
-                                    child: IconButton(
-                                      icon: Icon(Icons.timer),
-                                      color: Colors.red,
-                                      onPressed: () {},
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration:BoxDecoration(
+                        borderRadius:BorderRadius.circular(10),
+                        color:Colors.transparent
+                    ),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children:<Widget>[
+                          Container(
+                            // decoration:BoxDecoration(
+                            //     borderRadius:BorderRadius.circular(0),
+                            //     color:Colors.green
+                            // ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget> [
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: IconButton(
+                                        icon: Icon(Icons.thumb_up),
+                                        color: Colors.blue,
+                                        onPressed: () {},
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Container(
-                                    child: Text(posts[index].readyInMinutes.toString() + " Mins",
-                                      style: AppTheme.subtitleText,),
-                                  ),
-                                ),
-                              ],
-                            )
-                          // child: Text(posts[index].aggregateLikes.toString() + " Likes",
-                          //   style: AppTheme.subtitleText,),
-                        ),
-                        Container(
-                          // decoration:BoxDecoration(
-                          //     borderRadius:BorderRadius.circular(0),
-                          //     color:Colors.green
-                          // ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget> [
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Container(
-                                    child: IconButton(
-                                      icon: Icon(Icons.group),
-                                      color: Colors.green,
-                                      onPressed: () {},
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: Text(posts[index].aggregateLikes.toString() + " Likes",
+                                        style: AppTheme.subtitleText,),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Container(
-                                    child: Text(posts[index].servings.toString() + " Person",
-                                      style: AppTheme.subtitleText,),
+                                ],
+                              )
+                            // child: Text(posts[index].aggregateLikes.toString() + " Likes",
+                            //   style: AppTheme.subtitleText,),
+                          ),
+                          Container(
+                            // decoration:BoxDecoration(
+                            //     borderRadius:BorderRadius.circular(0),
+                            //     color:Colors.green
+                            // ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget> [
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: IconButton(
+                                        icon: Icon(Icons.timer),
+                                        color: Colors.red,
+                                        onPressed: () {},
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            )
-                          // child: Text(posts[index].aggregateLikes.toString() + " Likes",
-                          //   style: AppTheme.subtitleText,),
-                        ),
-                      ]
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: Text(posts[index].readyInMinutes.toString() + " Mins",
+                                        style: AppTheme.subtitleText,),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            // child: Text(posts[index].aggregateLikes.toString() + " Likes",
+                            //   style: AppTheme.subtitleText,),
+                          ),
+                          Container(
+                            // decoration:BoxDecoration(
+                            //     borderRadius:BorderRadius.circular(0),
+                            //     color:Colors.green
+                            // ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget> [
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: IconButton(
+                                        icon: Icon(Icons.group),
+                                        color: Colors.green,
+                                        onPressed: () {},
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: Text(posts[index].servings.toString() + " Person",
+                                        style: AppTheme.subtitleText,),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            // child: Text(posts[index].aggregateLikes.toString() + " Likes",
+                            //   style: AppTheme.subtitleText,),
+                          ),
+                        ]
+                    ),
                   ),
                 ),
-              ),
-            ]
-        ),
+              ]
+          ),
+        )
       );
 
     },
@@ -308,7 +319,12 @@ class _MyHomePageState extends State<MyHomePage> {
           SpeedDialChild(
               child: Icon(Icons.food_bank_rounded),
               label: "Dessert",
-              onTap: () => showToast("Dessert")
+              onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => DetailScreen()),
+                // );
+              }
           ),
           SpeedDialChild(
               child: Icon(Icons.food_bank_rounded),
