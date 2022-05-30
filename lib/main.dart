@@ -2,6 +2,8 @@ import 'dart:collection';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:spoonacular/RequestManager/api_client.dart';
 import 'package:spoonacular/Themes/AppTheme.dart';
 import 'package:spoonacular/models/Recipe.dart';
@@ -11,6 +13,12 @@ int number = 20;
 
 void main() {
   runApp(const MyApp());
+}
+
+Future showToast(String message) async {
+  await Fluttertoast.cancel();
+  
+  Fluttertoast.showToast(msg: message, fontSize: 18);
 }
 
 FutureBuilder<RecipeResponse> _buildRecipeBody(BuildContext context) {
@@ -50,55 +58,130 @@ ListView _buildRandomRecipeList(BuildContext context, List<Recipe> posts) {
                 child: new Image.network(posts[index].image.toString(),
                 fit: BoxFit.fill,),
               ),
-              Container(
-                decoration:BoxDecoration(
-                    borderRadius:BorderRadius.circular(10),
-                    color:Colors.transparent
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Container(
+                  decoration:BoxDecoration(
+                      borderRadius:BorderRadius.circular(10),
+                      color:Colors.transparent
+                  ),
+                  child: Text(posts[index].title.toString(),
+                    style: AppTheme.titleText,),
                 ),
-                child: Text(posts[index].title.toString(),
-                  style: AppTheme.titleText,),
               ),
-              Container(
-                decoration:BoxDecoration(
-                    borderRadius:BorderRadius.circular(10),
-                    color:Colors.transparent
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Container(
+                  decoration:BoxDecoration(
+                      borderRadius:BorderRadius.circular(10),
+                      color:Colors.transparent
+                  ),
+                  child: Text(posts[index].sourceName.toString(),
+                    style: AppTheme.subtitleText,),
                 ),
-                child: Text(posts[index].sourceName.toString(),
-                  style: AppTheme.subtitleText,),
               ),
-              Container(
-                decoration:BoxDecoration(
-                    borderRadius:BorderRadius.circular(10),
-                    color:Colors.transparent
-                ),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children:<Widget>[
-                      Container(
-                        decoration:BoxDecoration(
-                            borderRadius:BorderRadius.circular(0),
-                            color:Colors.green
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Container(
+                  decoration:BoxDecoration(
+                      borderRadius:BorderRadius.circular(10),
+                      color:Colors.transparent
+                  ),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children:<Widget>[
+                        Container(
+                          // decoration:BoxDecoration(
+                          //     borderRadius:BorderRadius.circular(0),
+                          //     color:Colors.green
+                          // ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget> [
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Container(
+                                  child: IconButton(
+                                    icon: Icon(Icons.thumb_up),
+                                    color: Colors.blue,
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Container(
+                                  child: Text(posts[index].aggregateLikes.toString() + " Likes",
+                                    style: AppTheme.subtitleText,),
+                                ),
+                              ),
+                            ],
+                          )
+                          // child: Text(posts[index].aggregateLikes.toString() + " Likes",
+                          //   style: AppTheme.subtitleText,),
                         ),
-                        child: Text(posts[index].aggregateLikes.toString() + " Likes",
-                          style: AppTheme.subtitleText,),
-                      ),
-                      Container(
-                        decoration:BoxDecoration(
-                            borderRadius:BorderRadius.circular(0),
-                            color:Colors.green
+                        Container(
+                          // decoration:BoxDecoration(
+                          //     borderRadius:BorderRadius.circular(0),
+                          //     color:Colors.green
+                          // ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget> [
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Container(
+                                    child: IconButton(
+                                      icon: Icon(Icons.timer),
+                                      color: Colors.red,
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Container(
+                                    child: Text(posts[index].readyInMinutes.toString() + " Mins",
+                                      style: AppTheme.subtitleText,),
+                                  ),
+                                ),
+                              ],
+                            )
+                          // child: Text(posts[index].aggregateLikes.toString() + " Likes",
+                          //   style: AppTheme.subtitleText,),
                         ),
-                        child: Text(posts[index].readyInMinutes.toString() + " Mins",
-                          style: AppTheme.subtitleText,),
-                      ),
-                      Container(
-                        decoration:BoxDecoration(
-                            borderRadius:BorderRadius.circular(0),
-                            color:Colors.green
+                        Container(
+                          // decoration:BoxDecoration(
+                          //     borderRadius:BorderRadius.circular(0),
+                          //     color:Colors.green
+                          // ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget> [
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Container(
+                                    child: IconButton(
+                                      icon: Icon(Icons.group),
+                                      color: Colors.green,
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Container(
+                                    child: Text(posts[index].servings.toString() + " Person",
+                                      style: AppTheme.subtitleText,),
+                                  ),
+                                ),
+                              ],
+                            )
+                          // child: Text(posts[index].aggregateLikes.toString() + " Likes",
+                          //   style: AppTheme.subtitleText,),
                         ),
-                        child: Text(posts[index].servings.toString() + " person",
-                          style: AppTheme.subtitleText,),
-                      )
-                    ]
+                      ]
+                  ),
                 ),
               ),
             ]
@@ -206,12 +289,53 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: _buildRecipeBody(context),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-
-        },
-        label:Icon(Icons.cancel),
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
         backgroundColor: Colors.green,
+        overlayColor: Colors.black,
+        overlayOpacity: 0.5,
+        children: [
+          SpeedDialChild(
+            child: Icon(Icons.food_bank_rounded),
+            label: "Main course",
+            onTap: () => showToast("Main course")
+          ),
+          SpeedDialChild(
+              child: Icon(Icons.food_bank_rounded),
+              label: "Side dish",
+              onTap: () => showToast("Side dish")
+          ),
+          SpeedDialChild(
+              child: Icon(Icons.food_bank_rounded),
+              label: "Dessert",
+              onTap: () => showToast("Dessert")
+          ),
+          SpeedDialChild(
+              child: Icon(Icons.food_bank_rounded),
+              label: "Appetizer",
+              onTap: () => showToast("Appetizer")
+          ),
+          SpeedDialChild(
+              child: Icon(Icons.food_bank_rounded),
+              label: "Salad",
+              onTap: () => showToast("Salad")
+          ),
+          SpeedDialChild(
+              child: Icon(Icons.food_bank_rounded),
+              label: "Breakfast",
+              onTap: () => showToast("Breakfast")
+          ),
+          SpeedDialChild(
+              child: Icon(Icons.food_bank_rounded),
+              label: "Soup",
+              onTap: () => showToast("Soup")
+          ),
+          SpeedDialChild(
+              child: Icon(Icons.food_bank_rounded),
+              label: "Drink",
+              onTap: () => showToast("Drink")
+          ),
+        ],
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
