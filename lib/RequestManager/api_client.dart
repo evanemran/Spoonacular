@@ -18,7 +18,6 @@ abstract class ApiClient {
 
 
 
-
   /*@POST('user/Api/v1/user/login')                                         //login
   Future<Response> getLogin([
     @Header("DeviceId") String deviceId,
