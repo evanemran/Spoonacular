@@ -12,7 +12,8 @@ abstract class ApiClient {
   @GET('recipes/random')
   Future<RecipeResponse> getRecipes(
       @Query("apiKey") String apiKey,
-      @Query("number") int number
+      @Query("number") int number,
+      @Query("tags") List<String> tags
       );
 
 

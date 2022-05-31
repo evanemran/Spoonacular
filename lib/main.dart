@@ -9,8 +9,9 @@ import 'package:spoonacular/RequestManager/api_client.dart';
 import 'package:spoonacular/Themes/AppTheme.dart';
 import 'package:spoonacular/models/Recipe.dart';
 
-String api_key = "c08f4981c8a44110b7ee3521f12796b4";
+String api_key = "e31374215c8e40b4839ff7bc9fa7ed14";
 int number = 20;
+List<String> tags =  [];
 // Recipe clickedRecipe = new Recipe();
 
 void main() {
@@ -24,17 +25,22 @@ Future showToast(String message) async {
 }
 
 FutureBuilder<RecipeResponse> _buildRecipeBody(BuildContext context) {
+
   final client = ApiClient(Dio(BaseOptions(contentType: "application/json")));
   return FutureBuilder<RecipeResponse>(
 
-    future: client.getRecipes(api_key, number),
+    future: client.getRecipes(api_key, number, tags),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.done) {
         final List<Recipe>? posts = snapshot.data?.recipes;
         return _buildRandomRecipeList(context, posts!);
       } else {
+        print("Hossain bhai else");
         return Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            color: Colors.white,
+            // backgroundColor: Colors.white,
+          ),
         );
       }
     },
@@ -203,24 +209,6 @@ ListView _buildRandomRecipeList(BuildContext context, List<Recipe> posts) {
   );
 }
 
-// ListView _buildRandomRecipeList(BuildContext context, List<Recipe> posts) {
-//   return ListView.builder(
-//     itemCount: posts.length,
-//     padding: EdgeInsets.all(8),
-//     itemBuilder: (context, index) {
-//       return Card(
-//         elevation: 4,
-//         child: ListTile(
-//           title: Text(
-//             posts[index].title.toString(),
-//             style: TextStyle(fontWeight: FontWeight.bold),
-//           ),
-//           subtitle: Text(posts[index].sourceName.toString()),
-//         ),
-//       );
-//     },
-//   );
-// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -280,7 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // createDoc['username'] = "shikha";
     // createDoc['password'] = "shikha";
     // final response = client.getLogin('123','abc','',createDoc);
-    final response = client.getRecipes(api_key, number);
+    final response = client.getRecipes(api_key, number, tags);
     // final user = userFromJson(response.toString());
     // print(user);
   }
@@ -300,6 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: _buildRecipeBody(context),
+      backgroundColor: Colors.green,
       floatingActionButton: SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
         backgroundColor: Colors.green,
@@ -309,51 +298,91 @@ class _MyHomePageState extends State<MyHomePage> {
           SpeedDialChild(
             child: Icon(Icons.food_bank_rounded),
             label: "Main course",
-            onTap: () => showToast("Main course")
+            onTap: () {
+
+              tags.clear();
+              tags.add("main course");
+              // _buildRecipeBody(context);
+              ReloadWithTag();
+            }
           ),
           SpeedDialChild(
               child: Icon(Icons.food_bank_rounded),
               label: "Side dish",
-              onTap: () => showToast("Side dish")
+              onTap: () {
+                tags.clear();
+                tags.add("side dish");
+                ReloadWithTag();
+              }
           ),
           SpeedDialChild(
               child: Icon(Icons.food_bank_rounded),
               label: "Dessert",
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => DetailScreen()),
-                // );
+                tags.clear();
+                tags.add("dessert");
+                // _buildRecipeBody(context);
+                ReloadWithTag();
               }
           ),
           SpeedDialChild(
               child: Icon(Icons.food_bank_rounded),
               label: "Appetizer",
-              onTap: () => showToast("Appetizer")
+              onTap: () {
+                tags.clear();
+                tags.add("appetizer");
+                ReloadWithTag();
+              }
           ),
           SpeedDialChild(
               child: Icon(Icons.food_bank_rounded),
               label: "Salad",
-              onTap: () => showToast("Salad")
+              onTap: () {
+                tags.clear();
+                tags.add("salad");
+                ReloadWithTag();
+              }
           ),
           SpeedDialChild(
               child: Icon(Icons.food_bank_rounded),
               label: "Breakfast",
-              onTap: () => showToast("Breakfast")
+              onTap: () {
+                tags.clear();
+                tags.add("breakfast");
+                ReloadWithTag();
+              }
           ),
           SpeedDialChild(
               child: Icon(Icons.food_bank_rounded),
               label: "Soup",
-              onTap: () => showToast("Soup")
+              onTap: () {
+                tags.clear();
+                tags.add("soup");
+                ReloadWithTag();
+              }
           ),
           SpeedDialChild(
               child: Icon(Icons.food_bank_rounded),
-              label: "Drink",
-              onTap: () => showToast("Drink")
+              label: "drink",
+              onTap: () {
+                tags.clear();
+                tags.add("drink");
+                ReloadWithTag();
+              }
           ),
         ],
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  void ReloadWithTag(){
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return MyApp();
+        },
+      ),
     );
   }
 }
