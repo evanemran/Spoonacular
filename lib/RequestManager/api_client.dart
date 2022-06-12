@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
+import 'package:spoonacular/Models/SimilarRecipeResponse.dart';
 import 'package:spoonacular/models/Recipe.dart';
 part 'api_client.g.dart';
 
@@ -16,13 +17,10 @@ abstract class ApiClient {
       @Query("tags") List<String> tags
       );
 
-
-
-  /*@POST('user/Api/v1/user/login')                                         //login
-  Future<Response> getLogin([
-    @Header("DeviceId") String deviceId,
-    @Header("AuthorizedToken") String authenticationKey,
-    @Header("Version") String version,
-    @QueryMap() Map<String, String> param,
-  ]);*/
+  @GET('recipes/{id}/similar')
+  Future<List<SimilarRecipeResponse>> getSimilarRecipes(
+      @Query("apiKey") String apiKey,
+      @Query("number") int number,
+      @Path("id") int id,
+      );
 }

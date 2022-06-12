@@ -59,6 +59,39 @@ class Recipe {
   int? originalId;
   String? spoonacularSourceUrl;
 
+  String getCategory(){
+    String categories = "";
+
+    if(vegetarian == true){
+      categories = categories + " Vegeterian";
+    }
+    if(vegan == true){
+      categories = categories + " Vegan";
+    }
+    if(glutenFree == true){
+      categories = categories + " GlutenFree";
+    }
+    if(dairyFree == true){
+      categories = categories + " DairyFree";
+    }
+    if(cheap == true){
+      categories = categories + " Cheap";
+    }
+    if(sustainable == true){
+      categories = categories + " Sustainable";
+    }
+    if(veryHealthy == true){
+      categories = categories + " VeryHealthy";
+    }
+    if(veryPopular == true){
+      categories = categories + " VeryPopular";
+    }
+
+    return categories;
+  }
+
+
+
   Recipe(
       {this.vegetarian,
         this.vegan,
@@ -96,6 +129,7 @@ class Recipe {
         this.creditsText,
         this.originalId,
         this.spoonacularSourceUrl});
+
 
   Recipe.fromJson(Map<String, dynamic> json) {
     vegetarian = json['vegetarian'];

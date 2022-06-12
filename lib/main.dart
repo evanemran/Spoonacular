@@ -8,6 +8,7 @@ import 'package:spoonacular/DetailScreen.dart';
 import 'package:spoonacular/RequestManager/api_client.dart';
 import 'package:spoonacular/Themes/AppTheme.dart';
 import 'package:spoonacular/models/Recipe.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 String api_key = "e31374215c8e40b4839ff7bc9fa7ed14";
 int number = 20;
@@ -35,7 +36,6 @@ FutureBuilder<RecipeResponse> _buildRecipeBody(BuildContext context) {
         final List<Recipe>? posts = snapshot.data?.recipes;
         return _buildRandomRecipeList(context, posts!);
       } else {
-        print("Hossain bhai else");
         return Center(
           child: CircularProgressIndicator(
             color: Colors.white,
@@ -66,14 +66,6 @@ ListView _buildRandomRecipeList(BuildContext context, List<Recipe> posts) {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children:<Widget>[
-                Container(
-                  decoration:BoxDecoration(
-                      borderRadius:BorderRadius.circular(10),
-                      color:Colors.transparent
-                  ),
-                  child: new Image.network(posts[index].image.toString(),
-                    fit: BoxFit.fill,),
-                ),
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Container(
@@ -92,9 +84,30 @@ ListView _buildRandomRecipeList(BuildContext context, List<Recipe> posts) {
                         borderRadius:BorderRadius.circular(10),
                         color:Colors.transparent
                     ),
-                    child: Text(posts[index].sourceName.toString(),
+                    child: Text(posts[index].getCategory().toString(),
                       style: AppTheme.subtitleText,),
                   ),
+                ),
+                Container(
+                  decoration:BoxDecoration(
+                      borderRadius:BorderRadius.circular(10),
+                      color:Colors.transparent
+                  ),
+                  child: FadeInImage.memoryNetwork(
+                    image: posts[index].image.toString(),
+                    height: 200,
+                    placeholder: kTransparentImage,
+                    imageErrorBuilder:
+                        (context, error, stackTrace) {
+                      return Image.asset(
+                          'assets/images/flag_placeholder.jpg',
+                          height: 200,
+                          fit: BoxFit.fitHeight);
+                    },
+                    fit: BoxFit.fitWidth,
+                  ),
+                  // child: Image.network(posts[index].image.toString(),
+                  //   fit: BoxFit.fill,),
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),

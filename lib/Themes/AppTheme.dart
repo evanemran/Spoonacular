@@ -78,7 +78,13 @@ class AppTheme {
   static final TextStyle titleText =
   TextStyle(fontSize: 26.0,fontWeight:FontWeight.bold, color: Colors.green,fontFamily: "Roboto");
 
+  static final TextStyle titleTextDetail =
+  TextStyle(fontSize: 26.0,fontWeight:FontWeight.bold, color: Colors.white,fontFamily: "Roboto");
+
   static final TextStyle subtitleText =
   TextStyle(fontSize: 18.0,fontWeight:FontWeight.normal, color: Colors.black,fontFamily: "Roboto");
+
+  static final TextStyle subtitleTextDetail =
+  TextStyle(fontSize: 18.0,fontWeight:FontWeight.normal, color: Colors.white,fontFamily: "Roboto");
 
 }
